@@ -1,16 +1,20 @@
-# whitespace
+# WhiteSpace 
+![Logo](https://github.com/user-attachments/assets/60abd9a1-3db1-4d5d-a64d-08f7150b3f1c)
 
-A new Flutter project.
 
-## Getting Started
+A Flutter application desinged for undergratuate students in University of Ruhuna.
+***
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Tech Stack
+- Dart (3.7.0)
+- Flutter (3.29.0)
+- Google Fonts
+- Material Design
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Theme Colors 
+- Blue (043F8D)
+- Yellow (FBBC04)
+
