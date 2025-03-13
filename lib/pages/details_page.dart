@@ -57,8 +57,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
+      body: SingleChildScrollView(
+
+        child:ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height -100,
+        ),
+          child:IntrinsicHeight(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const SizedBox(height: 30),
@@ -219,6 +225,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
             Fotter(),
           ],
         ),
+        )
+        )
       ),
     );
   }
