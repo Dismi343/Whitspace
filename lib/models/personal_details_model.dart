@@ -21,11 +21,11 @@ List<String> DegreeProgram = [
   'Botany',
 ];
 
-List<int> Year = [1, 2];
+List<int> Year = [3, 4];
 
 List<int> Semester = [1, 2];
 
-List<String> cs11 = [
+List<String> cs31 = [
   'CSS3113',
   'CSS3123',
   'CSS3132',
@@ -36,11 +36,13 @@ List<String> cs11 = [
   'CSS3192',
   'MAT313b',
 ];
-List<String> cs12 = [
+List<String> cs32 = [
   'CSS3212',
   'CSS3223',
   'CSS3232',
+  'CSS3242',
   'CSS3252',
+  'CSS3262',
   'CSS3272',
   'IMT321b',
 ];

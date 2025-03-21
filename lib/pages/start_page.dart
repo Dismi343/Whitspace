@@ -20,7 +20,7 @@ class StartPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
             Padding(
-              padding:const EdgeInsets.only(top:100),
+              padding:const EdgeInsets.only(top:150),
               child:Image.asset("assets/images/Logo.png",width:200,height:200,),
             ),
            
