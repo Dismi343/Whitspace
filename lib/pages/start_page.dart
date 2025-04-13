@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:whitespace/constants/colors.dart";
 import "package:whitespace/pages/login_page.dart";
@@ -9,13 +10,17 @@ class StartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       body:Center(
           child:Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
             Padding(
-              padding:const EdgeInsets.only(top:100),
+              padding:const EdgeInsets.only(top:150),
               child:Image.asset("assets/images/Logo.png",width:200,height:200,),
             ),
            
@@ -68,5 +73,17 @@ class StartPage extends StatelessWidget {
           ],)
       ),
     );
+    
+  }
+   @override
+  void dispose() {
+    // Restore default orientation when leaving the page
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+   
   }
 }
