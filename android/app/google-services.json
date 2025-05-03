@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "221585015541",
+    "project_id": "whitespace-a9917",
+    "storage_bucket": "whitespace-a9917.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221585015541:android:4af431aa07c532b0027bbc",
+        "android_client_info": {
+          "package_name": "com.example.whitespace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA08UNCwBipN2SDvQWd-YJQn9HTOO4Z54E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
