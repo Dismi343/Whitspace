@@ -1,4 +1,3 @@
-import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:whitespace/constants/colors.dart";
@@ -57,190 +56,185 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height - 100,
-          ),
-          child: IntrinsicHeight(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(height: 30),
-                Form(
-                  child: Container(
-                    width: 400,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'First name',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                color: primaryBlue,
-                                width: 1,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 30),
+                    Form(
+                      child: Container(
+                        width: 400,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'First name',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(
+                                    color: primaryBlue,
+                                    width: 1,
+                                  ),
+                                ),
                               ),
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "please enter First name";
+                                }
+                                return null;
+                              },
+                              onChanged: (value) {
+                                firstname = value;
+                              },
                             ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return "please enter First name";
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            firstname = value;
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Last name',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                color: primaryBlue,
-                                width: 1,
+                            const SizedBox(height: 20),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Last name',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(
+                                    color: primaryBlue,
+                                    width: 1,
+                                  ),
+                                ),
                               ),
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "please enter Last name";
+                                }
+                                return null;
+                              },
+                              onChanged: (value) {
+                                lastname = value;
+                              },
                             ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return "please enter Last name";
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            lastname = value;
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        DropdownButtonFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Degree Program',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                color: primaryBlue,
-                                width: 1,
+                            const SizedBox(height: 20),
+                            DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Degree Program',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(
+                                    color: primaryBlue,
+                                    width: 1,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          items:
-                              DegreeProgram.map((program) {
+                              items: DegreeProgram.map((program) {
                                 return DropdownMenuItem(
                                   value: program,
                                   child: Text(program),
                                 );
                               }).toList(),
-                          // value:"DegreeProgram",
-                          onChanged: (value) {
-                            setState(() {
-                              selectedDegreeProgram = value;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        DropdownButtonFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Year',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                color: primaryBlue,
-                                width: 1,
-                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDegreeProgram = value;
+                                });
+                              },
                             ),
-                          ),
-                          items:
-                              Year.map((program) {
+                            const SizedBox(height: 20),
+                            DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Year',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(
+                                    color: primaryBlue,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                              items: Year.map((program) {
                                 return DropdownMenuItem(
                                   value: program,
                                   child: Text(program.toString()),
                                 );
                               }).toList(),
-                          // value:"DegreeProgram",
-                          onChanged: (value) {
-                            setState(() {
-                              selectedYear = value;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        DropdownButtonFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Semester',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                color: primaryBlue,
-                                width: 1,
-                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedYear = value;
+                                });
+                              },
                             ),
-                          ),
-                          items:
-                              Semester.map((program) {
+                            const SizedBox(height: 20),
+                            DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Semester',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(
+                                    color: primaryBlue,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                              items: Semester.map((program) {
                                 return DropdownMenuItem(
                                   value: program,
                                   child: Text(program.toString()),
                                 );
                               }).toList(),
-                          // value:"DegreeProgram",
-                          onChanged: (value) {
-                            setState(() {
-                              selectedSemester = value;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 50),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size(200, 60),
-                            elevation: 5,
-                            backgroundColor: primaryYellow,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              if (firstname == null ||
-                                  lastname == null ||
-                                  selectedDegreeProgram == null ||
-                                  selectedSemester == null ||
-                                  selectedYear == null) {
-                                print("enter all details");
-                              } else {
-                                printdata();
-                                avilSub();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) => SubjectSelection(
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedSemester = value;
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 50),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(200, 60),
+                                elevation: 5,
+                                backgroundColor: primaryYellow,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  if (firstname == null ||
+                                      lastname == null ||
+                                      selectedDegreeProgram == null ||
+                                      selectedSemester == null ||
+                                      selectedYear == null) {
+                                    print("enter all details");
+                                  } else {
+                                    printdata();
+                                    avilSub();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SubjectSelection(
                                           avilsub: availableSub,
                                         ),
-                                  ),
-                                );
-                              }
-                            });
-                          },
-                          child: Text(
-                            "Next",
-                            style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontSize: 14,
+                                      ),
+                                    );
+                                  }
+                                });
+                              },
+                              child: Text(
+                                "Next",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-
-                Fotter(),
-              ],
+              ),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Fotter(),
+            ),
+          ],
         ),
       ),
     );

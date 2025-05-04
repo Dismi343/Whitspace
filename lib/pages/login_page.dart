@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:whitespace/constants/colors.dart";
 import "package:whitespace/constants/fotter.dart";
+import "package:whitespace/pages/rest_password.dart";
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -9,70 +10,97 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(),
-      body:Center(
-        child:Column (
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children:[
-            Column(
-            children:[
-              Padding(
-                padding: const EdgeInsets.only(top:150,),
-                child:Text(
-                "LOGIN" ,
-                style:GoogleFonts.poppins(  
-                  fontSize: 37,
-                  fontWeight: FontWeight.bold,
-                  ),
-              ),
-              ),
-              const SizedBox(height: 85),
-              Text(
-                "with",
-                style:GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                )
-              ),
-              const SizedBox(height: 25),
-              ElevatedButton(
-                onPressed: (){},
-               style:ElevatedButton.styleFrom(
-                  elevation: 5, 
-                  minimumSize: Size(250, 60),
-                  maximumSize: Size(250, 60),
-                  backgroundColor: Colors.white,
-                  side:BorderSide(
-                    color:Color(0xFF043F8D),
-                    width: 1,
-                  ) 
-               ),
-               child:Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    'assets/images/google_icon.png',
-                    height: 24, width:24),
-                    SizedBox(width: 50),
-                    Text(
-                      "Google",
-                      style:GoogleFonts.poppins(
-                        color:Colors.grey[800],
-                        fontSize: 16,
-                      )
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40),
+                      child: Text(
+                        "LOGIN",
+                        style: GoogleFonts.poppins(
+                          fontSize: 37,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                ],
-               ),
+                    ),
+                  Container(  
+                    margin: const EdgeInsets.symmetric(horizontal: 25),
+                    child:Column(
+                      children:[
+                        const SizedBox(height: 50),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'University Email',
+                        hintText: 'Enter your university email',
+                        border: UnderlineInputBorder(
+                          
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+                       TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        hintText: 'Enter your Password',
+                        border: UnderlineInputBorder(
+                         
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 200,top:30),
+                      child:TextButton(
+                        onPressed: ()=>{
+                          Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>ResetPage()))
+                        },
+                       child: Text(
+                        "Forgot Password?",
+                        style: GoogleFonts.poppins(
+                          color: fontBlue,
+                          decoration: TextDecoration.underline
+                          
+                        ),
+                       ))
+                    ),
+                    ]
+                    )
+                    ),
+               Container(   
+                padding: EdgeInsets.only(top: 20),
+                  child:ElevatedButton(
+                    onPressed: (){},
+                     style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(300, 60),
+                                  elevation: 5,
+                                  backgroundColor: primaryBlue,
+                                ),
+                     child:Text(
+                      'Login',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                     )
+                     )
+                     ),
+                  ],
                 ),
-
-                
-            ],
-          ),
-          Fotter()
-          
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Fotter(),
+            ),
           ],
+        ),
       ),
-    ),
     );
   }
 }
