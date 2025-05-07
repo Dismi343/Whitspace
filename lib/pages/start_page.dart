@@ -15,67 +15,97 @@ class StartPage extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return Scaffold(
-      body:Center(
-          child:Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-            Padding(
-              padding:const EdgeInsets.only(top:150),
-              child:Image.asset("assets/images/Logo.png",width:200,height:200,),
-            ),
-           
-            Container(
-              padding:const EdgeInsets.only(bottom:100),
-              child:Column(
-                children: [
-                  Padding( 
-                    padding:const EdgeInsets.only(bottom: 25),
-                    child:ElevatedButton(
-                    onPressed:()=>Navigator.push(context,
-                    MaterialPageRoute(builder:(context)=>LoginPage())),
-                    style:ElevatedButton.styleFrom(
-                      minimumSize: Size(350, 60),
-                      elevation: 5,
-                      backgroundColor:primaryBlue,
-                    ),
-                    child:Text("Login",
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                    ),
-                   ),
-                   ),
-                   ElevatedButton(
-                    onPressed:()=>Navigator.push(context,
-                    MaterialPageRoute(builder:(context)=>RegisterPage())),
-                    style:ElevatedButton.styleFrom(
-                      minimumSize: Size(350, 60),
-                      elevation: 5,
-                      backgroundColor:primaryYellow,
-                    ),
-                    child:Text("Register",
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-                      fontSize: 14,
-                    ),
-                    ),
-                   ),
-                   Padding(
-                      padding: const EdgeInsets.only(top: 25),
-                      child:Text("Powered by WhiteSpace team", style:TextStyle(color:Colors.grey[600],fontSize: 12,fontFamily: "Poppins"),),
-                   ),
-                   
-                ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 150),
+                        child: Image.asset(
+                          "assets/images/Logo.png",
+                          width: 200,
+                          height: 200,
+                        ),
+                      ),
+                       const SizedBox(height: 50),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 100),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 25),
+                              child: ElevatedButton(
+                                onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPage(),
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(350, 60),
+                                  elevation: 5,
+                                  backgroundColor: primaryBlue,
+                                ),
+                                child: Text(
+                                  "Login",
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RegisterPage(),
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(350, 60),
+                                elevation: 5,
+                                backgroundColor: primaryYellow,
+                              ),
+                              child: Text(
+                                "Register",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 25),
+                              child: Text(
+                                "Powered by WhiteSpace team",
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 12,
+                                  fontFamily: "Poppins",
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              
             ),
-          ],)
+          ],
+        ),
       ),
     );
-    
   }
-   @override
+
+  @override
   void dispose() {
     // Restore default orientation when leaving the page
     SystemChrome.setPreferredOrientations([
@@ -84,6 +114,5 @@ class StartPage extends StatelessWidget {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-   
   }
 }
