@@ -4,15 +4,26 @@ import "package:whitespace/constants/colors.dart";
 import "package:whitespace/constants/fotter.dart";
 import "package:whitespace/pages/rest_password.dart";
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+  @override
+  _loginFormState createState() => _loginFormState();
+}
+
+class _loginFormState extends State<LoginPage> {
+
+  final _formKey = GlobalKey<FormState>();
+
+  bool _obscureText = true;
+  String _email='';
+  String _password='';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(),
-      body: SafeArea(
+      body: Form(
         child: Column(
           children: [
             Expanded(
@@ -34,24 +45,56 @@ class LoginPage extends StatelessWidget {
                     child:Column(
                       children:[
                         const SizedBox(height: 50),
-                    TextField(
+                    TextFormField(
                       decoration: InputDecoration(
                         labelText: 'University Email',
-                        hintText: 'Enter your university email',
-                        border: UnderlineInputBorder(
-                          
-                        ),
+                        border: UnderlineInputBorder(),
+                        prefixIcon: Icon(Icons.email),
                       ),
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (value){
+                        _email=value;
+                      },
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return "please enter your emal";
+                        }
+                        else if(!value.contains('@')){
+                          return "please enter valide email";
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 25),
-                       TextField(
+                       TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        hintText: 'Enter your Password',
-                        border: UnderlineInputBorder(
-                         
-                        ),
+                        border: UnderlineInputBorder(),
+                        prefixIcon: Icon(Icons.lock),
+                        suffixIcon: IconButton(
+                          icon:Icon(
+                            _obscureText? Icons.visibility : Icons.visibility_off,
+                          ),
+                          onPressed: (){
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                        )
                       ),
+                      obscureText: _obscureText,
+                      onChanged: (value){
+                        _password=value;
+                      },
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return "please enter your password";
+                        }
+                        else if(value.length < 6){
+                          return "password must be at least 6 characters";
+                        }
+                        return null;
+                      },
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 200,top:30),
@@ -75,7 +118,14 @@ class LoginPage extends StatelessWidget {
                Container(   
                 padding: EdgeInsets.only(top: 20),
                   child:ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      if(_formKey.currentState?.validate() ?? true){
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content : Text("Processing..."),
+                        )
+                        );
+                      }
+                    },
                      style: ElevatedButton.styleFrom(
                                   minimumSize: Size(300, 60),
                                   elevation: 5,

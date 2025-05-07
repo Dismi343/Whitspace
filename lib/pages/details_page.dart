@@ -5,14 +5,14 @@ import "package:whitespace/constants/fotter.dart";
 import "package:whitespace/models/personal_details_model.dart";
 import "package:whitespace/pages/subject_selection.dart";
 
-class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({super.key});
+class DetailsPage extends StatefulWidget {
+  const DetailsPage({super.key});
 
   @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
+  State<DetailsPage> createState() => _RegistrationPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _RegistrationPageState extends State<DetailsPage> {
   String? selectedDegreeProgram;
   String? firstname;
   String? lastname;
