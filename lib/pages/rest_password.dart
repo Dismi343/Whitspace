@@ -3,11 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:whitespace/constants/colors.dart';
 
-class ResetPage extends StatelessWidget {
+class ResetPage extends StatefulWidget {
   const ResetPage({super.key});
 
+  @override
+   _ResetPageState createState() => _ResetPageState();
   
-
+}
+class _ResetPageState extends State<ResetPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,6 +151,24 @@ class ResetPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 70,horizontal: 25),
+                    child:ElevatedButton(
+                      onPressed: (){},
+                      style:ElevatedButton.styleFrom(
+                        minimumSize:Size(300, 60),
+                        elevation:5,
+                        backgroundColor: primaryYellow
+                      ),
+                      child:Text(
+                        'verify',
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                      ),
+                    )
+                  )
 
                 
                 ],
