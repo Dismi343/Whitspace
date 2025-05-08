@@ -11,7 +11,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _loginFormState extends State<LoginPage> {
-
+  final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   bool _obscureText = true;
@@ -46,6 +47,7 @@ class _loginFormState extends State<LoginPage> {
                       children:[
                         const SizedBox(height: 50),
                     TextFormField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                         labelText: 'University Email',
                         border: UnderlineInputBorder(),
@@ -67,6 +69,7 @@ class _loginFormState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 25),
                        TextFormField(
+                        controller: _passwordController,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         border: UnderlineInputBorder(),
@@ -100,7 +103,7 @@ class _loginFormState extends State<LoginPage> {
                       padding: EdgeInsets.only(left: 200,top:30),
                       child:TextButton(
                         onPressed: ()=>{
-                          Navigator.push(context,
+                          Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context)=>ResetPage()))
                         },
                        child: Text(

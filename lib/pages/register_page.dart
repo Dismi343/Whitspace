@@ -3,6 +3,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:whitespace/constants/colors.dart";
 import "package:whitespace/constants/fotter.dart";
 import "package:whitespace/pages/details_page.dart";
+import "package:whitespace/services/auth_service.dart";
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -14,13 +15,71 @@ class RegisterPage extends StatefulWidget {
 
  class _regFormdState extends State<RegisterPage> {
 
+    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+    final TextEditingController _confirmController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
   bool _obsecureConfirmtext = true;
- 
-  String _password = '';
-  String _email = '';
-  String _confirm = '';
+  bool _isLoading = false;
+  
+  Future<void> _registerUser() async{
+    if(!_formKey.currentState!.validate()){
+      return;
+    }
+    setState((){
+      _isLoading = true;  
+    });
+    try{
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
+      final confirmPassword = _confirmController.text.trim();
+      if(password != confirmPassword ){
+        showDialog(context: context,
+        builder: ((context)=>AlertDialog(
+          title:const Text("Error"),
+          content: const Text("please make sure your passwords match"),
+          actions:[
+            TextButton(onPressed: ()=>Navigator.of(context).pop(), 
+            child:const Text("OK"),
+            )
+          ]
+        )
+        )
+        );
+        return;
+      }
+
+      await AuthService().registerNewUser(email: email, password: password);
+       Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) => DetailsPage(),
+          ),
+        );
+
+    }catch(error){
+      showDialog(context: context,
+        builder: ((context)=>AlertDialog(
+          title:const Text("Error"),
+          content:  Text('Error $error'),
+          actions:[
+            TextButton(onPressed: ()=>Navigator.of(context).pop(), 
+            child:const Text("OK"),
+            )
+          ]
+        )
+        )
+        );
+    }
+    finally{
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,18 +108,27 @@ class RegisterPage extends StatefulWidget {
                       children: [
                         const SizedBox(height: 50,),
                         TextFormField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             labelText: "University Email",
                             border: UnderlineInputBorder(
 
                             )
                           ),
-                          onChanged :(value) {
-                            _email = value;
+                          validator:(value){
+                            if(value == null || value.isEmpty){
+                              return "please enter your email";
+                            }else if(!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)){
+                              return "please enter a valid email";
+                            }
+                            return null;
                           },
+                         
                         ),
                         const SizedBox(height: 20,),
                         TextFormField(
+                          controller: _passwordController,
                           decoration: InputDecoration(
                             labelText: "password",
                             border: UnderlineInputBorder(),
@@ -76,14 +144,12 @@ class RegisterPage extends StatefulWidget {
                             ),
                           ),
                           obscureText: _obscureText,
-                          onChanged: (value){
-                            _password = value;
-                          },
+                         
                           validator:(value){
                             if(value==null || value.isEmpty ){
                               return "please enter your password";
                             }
-                            if(value.length < 6){
+                            else if(value.length < 6){
                               return "password must be at least 6 characters";
                             }
                             return null;
@@ -91,6 +157,7 @@ class RegisterPage extends StatefulWidget {
                         ),
                         const SizedBox(height: 20,),
                         TextFormField(
+                          controller: _confirmController,
                           decoration: InputDecoration(
                             labelText: "conrirm password",
                             border: UnderlineInputBorder(),
@@ -107,14 +174,12 @@ class RegisterPage extends StatefulWidget {
                             ),
                           ),
                           obscureText: _obsecureConfirmtext,
-                          onChanged: (value){
-                            _confirm=value;
-                          },
+                        
                           validator: (value){
                             if(value == null || value.isEmpty){
                               return "please confirm your password";
                             }
-                            if(value != _password){
+                            if(value != _passwordController.text){
                               return "passwords do not match";
                             }
                             return null;
@@ -124,26 +189,13 @@ class RegisterPage extends StatefulWidget {
                         const SizedBox(height: 25),
 
                         ElevatedButton(
-                          onPressed: (){
-                            if(_formKey.currentState!.validate()){
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Proccessing....")),
-                              );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DetailsPage(),
-                                ),
-                              );
-                             
-                            }
-                          },
+                          onPressed:_registerUser,
                           style: ElevatedButton.styleFrom(
                                   minimumSize: Size(300, 60),
                                   elevation: 5,
                                   backgroundColor: primaryYellow,
                                 ),
-                          child: Text(
+                          child: _isLoading? const CircularProgressIndicator():  Text(
                             "Sign Up",
                           style: GoogleFonts.poppins(
                         color: Colors.black,
