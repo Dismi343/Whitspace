@@ -2,7 +2,9 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:whitespace/constants/colors.dart";
 import "package:whitespace/constants/fotter.dart";
+import "package:whitespace/pages/home_page.dart";
 import "package:whitespace/pages/rest_password.dart";
+import "package:whitespace/services/auth_service.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,19 +13,61 @@ class LoginPage extends StatefulWidget {
 }
 
 class _loginFormState extends State<LoginPage> {
-
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  bool _obscureText = true;
-  String _email='';
-  String _password='';
+  bool _isLoading = false;
 
+  Future<void> _signinUser()async{
+    if(!_formKey.currentState!.validate()){
+      return;
+    }
+    setState(() {
+      _isLoading = true;  
+    });
+
+    try{
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
+   
+      await AuthService().signinUser(email: email, password: password);
+
+      Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder:(context) => HomePage(), ));
+
+    }catch(error){
+    
+        showDialog(context: context,
+        builder: ((context)=>AlertDialog(
+          title:const Text("Error"),
+          content:  Text('Error Signing in $error'),
+          actions:[
+            TextButton(onPressed: ()=>Navigator.of(context).pop(), 
+            child:const Text("OK"),
+            )
+          ]
+        )
+        )
+        );
+    }finally{
+      setState((){
+        _isLoading = false;
+      });
+    }
+  }
+
+  bool _obscureText = true;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(),
       body: Form(
+        key:_formKey,
         child: Column(
           children: [
             Expanded(
@@ -46,15 +90,14 @@ class _loginFormState extends State<LoginPage> {
                       children:[
                         const SizedBox(height: 50),
                     TextFormField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                         labelText: 'University Email',
                         border: UnderlineInputBorder(),
                         prefixIcon: Icon(Icons.email),
                       ),
                       keyboardType: TextInputType.emailAddress,
-                      onChanged: (value){
-                        _email=value;
-                      },
+                   
                       validator: (value){
                         if(value == null || value.isEmpty){
                           return "please enter your emal";
@@ -67,6 +110,7 @@ class _loginFormState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 25),
                        TextFormField(
+                        controller: _passwordController,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         border: UnderlineInputBorder(),
@@ -83,9 +127,7 @@ class _loginFormState extends State<LoginPage> {
                         )
                       ),
                       obscureText: _obscureText,
-                      onChanged: (value){
-                        _password=value;
-                      },
+                   
                       validator: (value){
                         if(value == null || value.isEmpty){
                           return "please enter your password";
@@ -100,7 +142,7 @@ class _loginFormState extends State<LoginPage> {
                       padding: EdgeInsets.only(left: 200,top:30),
                       child:TextButton(
                         onPressed: ()=>{
-                          Navigator.push(context,
+                          Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context)=>ResetPage()))
                         },
                        child: Text(
@@ -118,14 +160,7 @@ class _loginFormState extends State<LoginPage> {
                Container(   
                 padding: EdgeInsets.only(top: 20),
                   child:ElevatedButton(
-                    onPressed: (){
-                      if(_formKey.currentState?.validate() ?? true){
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content : Text("Processing..."),
-                        )
-                        );
-                      }
-                    },
+                    onPressed:_signinUser,
                      style: ElevatedButton.styleFrom(
                                   minimumSize: Size(300, 60),
                                   elevation: 5,
