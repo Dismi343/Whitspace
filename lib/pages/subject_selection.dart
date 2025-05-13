@@ -2,6 +2,7 @@ import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
 import "package:whitespace/constants/colors.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:whitespace/services/userdetails_service.dart";
 
 class SubjectSelection extends StatefulWidget {
   final List<String> avilsub;
@@ -32,6 +33,7 @@ class _SubjectSelectionState extends State<SubjectSelection> {
     selectedOptions = {for (var subject in widget.avilsub) subject: false};
   }
   void printDone(){
+    UserDetails().addUser(widget.firstname, widget.lastname, widget.degree, widget.year, widget.semester,selectedSubjects);
     print("done");
     print("firstname : ${widget.firstname}");
     print("lastname : ${widget.lastname}");

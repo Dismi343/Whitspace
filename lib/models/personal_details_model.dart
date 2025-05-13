@@ -1,15 +1,50 @@
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
-// enum DegreeProgram {
-//   Mathematics,
-//   ComputerScience ,
-//   Physics ,
-//   Chemistry ,
-//   Biology ,
-//   Zoology ,
-//   Botany,
+class User{
+  String id;
+  String firstName;
+  String lastName;
+  String degreeProgram;
+  int year;
+  int semester;
+  List<String> selectedSubjects ;
 
-// }
+  User({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.degreeProgram,
+    required this.year,
+    required this.semester,
+    required this.selectedSubjects,
+  });
+
+factory User.fromJson(Map<String, dynamic> json, String id) {
+    return User(
+      id:id,
+      firstName: json['firstName'] ?? '',
+      lastName: json['lastName'] ?? '',
+      degreeProgram: json['degreeProgram'] ?? '',
+      year: json['year'] ?? 0,
+      semester: json['semester'] ?? 0,
+      selectedSubjects: List<String>.from(json['selectedSubjects'] ?? []),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+     
+      'firstName': firstName,
+      'lastName': lastName,
+      'degreeProgram': degreeProgram,
+      'year': year,
+      'semester': semester,
+      'selectedSubjects': selectedSubjects,
+    };
+  }
+
+}
 
 List<String> DegreeProgram = [
   'Mathematics',
