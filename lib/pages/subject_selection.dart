@@ -1,10 +1,17 @@
+import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
 import "package:whitespace/constants/colors.dart";
 import "package:google_fonts/google_fonts.dart";
 
 class SubjectSelection extends StatefulWidget {
   final List<String> avilsub;
-  const SubjectSelection({Key? key, required this.avilsub}) : super(key: key);
+  final String firstname;
+   final String lastname;
+   final String degree;
+   final int year;
+    final int semester;
+
+  const SubjectSelection({Key? key, required this.avilsub, required this.firstname, required this.lastname, required this.degree, required this.year, required this.semester}) : super(key: key);
 
   void sample() {}
   @override
@@ -12,6 +19,9 @@ class SubjectSelection extends StatefulWidget {
 }
 
 class _SubjectSelectionState extends State<SubjectSelection> {
+
+
+  
   late Map<String, bool> selectedOptions;
 
   @override
@@ -22,6 +32,13 @@ class _SubjectSelectionState extends State<SubjectSelection> {
   }
   void printDone(){
     print("done");
+    print("firstname : ${widget.firstname}");
+    print("lastname : ${widget.lastname}");
+    print("degree : ${widget.degree}");
+    print("year : ${widget.year}");
+    print("semester : ${widget.semester}");
+
+   
   }
 
   @override
