@@ -24,6 +24,7 @@ class _SubjectSelectionState extends State<SubjectSelection> {
   
   late Map<String, bool> selectedOptions;
 
+   List<String> selectedSubjects = [];
   @override
   void initState() {
     super.initState();
@@ -37,6 +38,7 @@ class _SubjectSelectionState extends State<SubjectSelection> {
     print("degree : ${widget.degree}");
     print("year : ${widget.year}");
     print("semester : ${widget.semester}");
+    print("selected subjects : ${selectedSubjects.join(', ')}");
 
    
   }
@@ -77,13 +79,16 @@ class _SubjectSelectionState extends State<SubjectSelection> {
               onPressed:
                   isButtonEnabled
                       ? () {
-                        printDone();
+                        
+
                         // Perform action with selected subjects
-                        List<String> selectedSubjects =
+                         selectedSubjects =
                             selectedOptions.entries
                                 .where((entry) => entry.value)
                                 .map((entry) => entry.key)
                                 .toList();
+
+                          printDone();
                         // Example action: Display selected subjects
                         showDialog(
                           context: context,
