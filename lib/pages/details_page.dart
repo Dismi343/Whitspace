@@ -13,6 +13,12 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<DetailsPage> {
+
+
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lasttNameController = TextEditingController();
+
+
   String? selectedDegreeProgram;
   String? firstname;
   String? lastname;
@@ -34,13 +40,7 @@ class _RegistrationPageState extends State<DetailsPage> {
     }
   }
 
-  void printdata() {
-    print("fisrtname : $firstname");
-    print("lastname : $lastname");
-    print("selectedDegree : $selectedDegreeProgram");
-    print("selectedYear : $selectedYear");
-    print("selectedSemester : $selectedSemester");
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +71,7 @@ class _RegistrationPageState extends State<DetailsPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             TextFormField(
+                              controller:_firstNameController,
                               decoration: InputDecoration(
                                 labelText: 'First name',
                                 border: OutlineInputBorder(
@@ -93,6 +94,7 @@ class _RegistrationPageState extends State<DetailsPage> {
                             ),
                             const SizedBox(height: 20),
                             TextFormField(
+                              controller: _lasttNameController,
                               decoration: InputDecoration(
                                 labelText: 'Last name',
                                 border: OutlineInputBorder(
@@ -201,13 +203,20 @@ class _RegistrationPageState extends State<DetailsPage> {
                                       selectedYear == null) {
                                     print("enter all details");
                                   } else {
-                                    printdata();
+                                    String firstname = _firstNameController.text;
+                                    String lastname = _lasttNameController.text;
                                     avilSub();
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => SubjectSelection(
                                           avilsub: availableSub,
+                                          firstname: firstname,
+                                          lastname: lastname,
+                                          degree: selectedDegreeProgram!,
+                                          year: selectedYear!,
+                                          semester: selectedSemester!,
+
                                         ),
                                       ),
                                     );
