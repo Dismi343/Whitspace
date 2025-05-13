@@ -206,7 +206,7 @@ class _RegistrationPageState extends State<DetailsPage> {
                                     String firstname = _firstNameController.text;
                                     String lastname = _lasttNameController.text;
                                     avilSub();
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => SubjectSelection(

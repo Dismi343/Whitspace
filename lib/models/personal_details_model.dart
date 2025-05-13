@@ -20,9 +20,9 @@ class User{
     required this.selectedSubjects,
   });
 
-factory User.fromJson(Map<String, dynamic> json, String id) {
+factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id:id,
+      id:json['id'] ?? '',
       firstName: json['firstName'] ?? '',
       lastName: json['lastName'] ?? '',
       degreeProgram: json['degreeProgram'] ?? '',
@@ -34,7 +34,7 @@ factory User.fromJson(Map<String, dynamic> json, String id) {
 
   Map<String, dynamic> toJson() {
     return {
-     
+      'id': id,
       'firstName': firstName,
       'lastName': lastName,
       'degreeProgram': degreeProgram,

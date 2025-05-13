@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:whitespace/constants/colors.dart";
-import "package:whitespace/pages/details_page.dart";
 import "package:whitespace/pages/login_page.dart";
 import "package:whitespace/pages/register_page.dart"; 
 
