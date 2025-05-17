@@ -47,4 +47,18 @@ Future<void> signinUser({required String email, required String password}) async
   }
 }
 
+Future<void> resetPassword({required String email}) async{
+  try{
+
+    await _auth.sendPasswordResetEmail(email: email);
+    print('Sent: $email');
+  }on FirebaseAuthException catch(e){
+    print("Error creating new user: ${mapFirebaseAuthExceptionCode(e.code)}");
+    throw Exception(mapFirebaseAuthExceptionCode(e.code));
+  } 
+  catch(error){
+    print('Error resetting password: $error');
+  }
+}
+
 }
