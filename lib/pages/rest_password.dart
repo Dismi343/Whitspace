@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:whitespace/constants/colors.dart';
-import 'package:whitespace/pages/reset_varify.dart';
+import 'package:whitespace/services/auth_service.dart';
 
 class ResetPage extends StatefulWidget {
   const ResetPage({super.key});
@@ -13,10 +12,59 @@ class ResetPage extends StatefulWidget {
 }
 class _ResetPageState extends State<ResetPage>{
 
+
+final TextEditingController _emailController = TextEditingController();
+final _formkey = GlobalKey<FormState>();
+bool _isLoading = false;
+
   final int fieldCount=4;
 
   late List<TextEditingController> _controllers;
   late List<FocusNode> _focusNodes;
+
+  Future<void> _sendEmail() async{
+    if(!_formkey.currentState!.validate()){
+      return;
+    }
+    setState(() {
+      _isLoading = true;
+    });
+    try{
+
+      final email = _emailController.text.trim();
+      await AuthService().resetPassword(email: email);
+
+      showDialog(context: context,
+        builder: ((context)=>AlertDialog(
+          title:const Text("Done"),
+          content:  Text('Email sent '),
+          actions:[
+            TextButton(onPressed: ()=>Navigator.of(context).pop(), 
+            child:const Text("OK"),
+            )
+          ]
+        )
+        )
+        );
+    }catch(error){
+      showDialog(context: context,
+        builder: ((context)=>AlertDialog(
+          title:const Text("Error"),
+          content:  Text('Error $error'),
+          actions:[
+            TextButton(onPressed: ()=>Navigator.of(context).pop(), 
+            child:const Text("OK"),
+            )
+          ]
+        )
+        )
+        );
+    }finally{
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
 @override
 void initState(){
@@ -49,67 +97,66 @@ void dispose(){
         centerTitle: true,
       ),
       body:SafeArea(
-        child :Column(
-          children: [
-            Expanded(child:SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 100,right: 25,left: 25),
-                    child:TextField(
-                      decoration: InputDecoration(
-                        labelText:"Enter Your University Email",
-                        border:UnderlineInputBorder(
+        child :Center(
+          child: Column(
+            children: [
+              Expanded(child:SingleChildScrollView(
+                child: Form(
+                  key:_formkey,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top:250,left:25,right:25, bottom:70),
+                        child:TextFormField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            labelText:"Enter Your University Email",
+                            border:UnderlineInputBorder(
+                            )
+                          ),
+                         validator: (value){
+                           if(value == null || value.isEmpty){
+                                return "please enter your email";
+                              }else if(!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)){
+                                return "please enter a valid email";
+                              }
+                              return null;
+                            },
                         )
                       ),
-                    )
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(vertical: 70),
-                    child:ElevatedButton(
-                      onPressed: (){},
-                      style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(300, 60),
-                                  elevation: 5,
-                                  backgroundColor: primaryBlue,
-                                ),
-                     child:Text(
-                      'Send Varification Code',
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                     )
-                    )
-                    ),
-                    Container(
-                      child:Varify()
-                    ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 70,horizontal: 25),
-                    child:ElevatedButton(
-                      onPressed: (){},
-                      style:ElevatedButton.styleFrom(
-                        minimumSize:Size(300, 60),
-                        elevation:5,
-                        backgroundColor: primaryYellow
-                      ),
-                      child:Text(
-                        'verify',
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: 14,
+                      Container(
+                        alignment: Alignment.center,
+                       
+                        child:Column(  
+                        children:[
+                          _isLoading
+                        ? const CircularProgressIndicator()
+                        : ElevatedButton(
+                          onPressed: _sendEmail,
+                          style: ElevatedButton.styleFrom(
+                                      minimumSize: Size(300, 60),
+                                      elevation: 5,
+                                      backgroundColor: primaryBlue,
+                                    ),
+                         child:Text(
+                          'Send Reset Link',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                         )
+                        )
+                        ]
+                        )
                         ),
-                      ),
-                    )
-                  )
-
-                
-                ],
-              ),
-            ))
-          ],
+                      
+                    
+                    ],
+                  ),
+                ),
+              ))
+            ],
+          ),
         )
       )
     );
