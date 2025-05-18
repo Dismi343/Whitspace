@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:whitespace/constants/colors.dart';
-import 'package:whitespace/pages/start_page.dart';
+import 'package:whitespace/models/UserModel.dart';
+import 'package:whitespace/pages/Wrapper.dart';
+import 'package:whitespace/services/auth_service.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -43,9 +46,11 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     Timer(Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
+      if (mounted) {
+          Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => SplashScreen1()),
       );
+      }
     });
   }
 
@@ -117,9 +122,11 @@ class _SplashScreen1State extends State<SplashScreen1>
     _controller.forward();
 
     Timer(Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => SplashScreen2()),
-      );
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => SplashScreen2()),
+        );
+      }
     });
   }
 
@@ -191,9 +198,11 @@ class _SplashScreen2State extends State<SplashScreen2>
     _controller.forward();
 
     Timer(Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => SplashScreen3()),
-      );
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => SplashScreen3()),
+        );
+      }
     });
   }
 
@@ -271,9 +280,11 @@ class _SplashScreen3State extends State<SplashScreen3>
     _controller.forward();
 
     Timer(Duration(seconds: 4), () {
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (context) => StartPage()));
+      if (mounted) {
+        Navigator.of(
+          context,
+        ).pushReplacement(MaterialPageRoute(builder: (context) => ToWrapper()));
+      }
     });
   }
 
@@ -320,5 +331,23 @@ class _SplashScreen3State extends State<SplashScreen3>
         ),
       ),
     );
+  }
+}
+
+class ToWrapper extends StatefulWidget {
+  const ToWrapper({super.key});
+
+  @override
+  State<ToWrapper> createState() => _ToWrapperState();
+}
+
+class _ToWrapperState extends State<ToWrapper> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<UserModel?>.value(
+      initialData: UserModel(uid: ""),
+      value: AuthService().user,
+      child: MaterialApp(debugShowCheckedModeBanner: false, home: Wrapper()),
+    );;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:whitespace/exceptions/auth_exceptions.dart';
+import 'package:whitespace/models/UserModel.dart';
 
 
 class AuthService {
@@ -8,7 +9,16 @@ User? getCurrentUser() {
  return _auth.currentUser; 
 }
 
-Future<void> singOut() async{
+//create a user from firebase user
+UserModel? _userFromFirebaseUser(User? user) {
+  return user != null ? UserModel(uid: user.uid) : null;
+}
+//create the stream for checking the auth changes in the user
+Stream<UserModel?> get user {
+  return _auth.authStateChanges().map(_userFromFirebaseUser);
+}
+
+Future<void> signOut() async{
   try{
     await _auth.signOut();
     print("User signed out successfully");
